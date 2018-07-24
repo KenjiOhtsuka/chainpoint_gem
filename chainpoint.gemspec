@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = "Chainpoint request library"
   #spec.description   = %q{TODO: Write a longer description or delete this line.}
-  #spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.homepage      = "https://github.com/KenjiOhtsuka/chainpoint_gem"
 
   spec.add_runtime_dependency "json"
 
