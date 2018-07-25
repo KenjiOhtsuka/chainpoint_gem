@@ -41,7 +41,7 @@ c.submit(hash)
 Or, use `submit_data`:
 
 ```ruby
-c.submit("text")
+c.submit_data("text")
 ```
 
 ### Get Proof
