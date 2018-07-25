@@ -38,6 +38,12 @@ c.submit(hash)
 # => {"meta"=>{"submitted_at"=>"2018-07-24T13:04:35Z", "processing_hints"=>{"cal"=>"2018-07-24T13:04:50Z", "btc"=>"2018-07-24T14:05:35Z"}}, "hashes"=>[{"hash_id_node"=>"1d1aa8a0-8f42-11e8-967f-01a68adfc010", "hash"=>"2fbe59be2be10a4fdeca9c6d3e9f56fc56fb3ee9a8ef2e9be37fced60c264681"}]}
 ```
 
+Or, use `submit_data`:
+
+```ruby
+c.submit("text")
+```
+
 ### Get Proof
 
 ```ruby
