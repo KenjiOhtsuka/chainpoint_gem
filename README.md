@@ -1,5 +1,7 @@
 # Chainpoint
 
+[![Gem Version](https://badge.fury.io/rb/chainpoint.svg)](https://badge.fury.io/rb/chainpoint)
+
 This is gem for request to Chainpoint.
 For Chainpoint, look at [Chainpoint Node HTTP API](https://github.com/chainpoint/chainpoint-node/wiki/Node-HTTP-API).
 
