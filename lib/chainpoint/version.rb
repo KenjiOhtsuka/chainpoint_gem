@@ -1,3 +1,3 @@
-module Chainpoint
-  VERSION = "0.0.1"
+class Chainpoint
+  VERSION = "0.0.2"
 end
