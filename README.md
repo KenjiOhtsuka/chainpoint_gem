@@ -125,3 +125,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 ## Contributing
 
 Bug reports and pull requests are welcome on [GitHub chainpoint](https://github.com/KenjiOhtsuka/chainpoint_gem).
+
+## Other
+
+* PHP [Composer Package](https://packagist.org/packages/kenji-otsuka/chainpoint) and its [GitHub Repository](https://github.com/KenjiOhtsuka/chainpoint_php).
