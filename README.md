@@ -4,6 +4,8 @@
 
 [Rubygem Page](https://rubygems.org/gems/chainpoint)
 
+[API Document](https://kenjiohtsuka.github.io/chainpoint_gem/)
+
 This is gem for request to Tierion Chainpoint.
 For Chainpoint, look at [Chainpoint Node HTTP API](https://github.com/chainpoint/chainpoint-node/wiki/Node-HTTP-API).
 
