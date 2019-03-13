@@ -29,8 +29,8 @@ Or install it yourself as:
 ### Create Instance
 
 ```ruby
-require 'checkpoint'
-c = Checkpoint.new
+require 'chainpoint'
+c = Chainpoint.new
 ```
 
 ### Submit Hash
