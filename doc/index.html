@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: README
+  
+    &mdash; Documentation by YARD 0.9.18
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "README";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: README</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'>
+<h1 id="label-Chainpoint">Chainpoint</h1>
+
+<p><a href="https://badge.fury.io/rb/chainpoint"><img
+src="https://badge.fury.io/rb/chainpoint.svg"></a></p>
+
+<p><a href="https://rubygems.org/gems/chainpoint">Rubygem Page</a></p>
+
+<p>This is gem for request to Tierion Chainpoint. For Chainpoint, look at <a
+href="https://github.com/chainpoint/chainpoint-node/wiki/Node-HTTP-API">Chainpoint
+Node HTTP API</a>.</p>
+
+<h2 id="label-Installation">Installation</h2>
+
+<p>Add this line to your application&#39;s Gemfile:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_gem'>gem</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>chainpoint</span><span class='tstring_end'>&#39;</span></span>
+</code></pre>
+
+<p>And then execute:</p>
+
+<pre class="code ruby"><code class="ruby">$ bundle
+</code></pre>
+
+<p>Or install it yourself as:</p>
+
+<pre class="code ruby"><code class="ruby">$ gem install chainpoint
+</code></pre>
+
+<h2 id="label-Usage">Usage</h2>
+
+<h3 id="label-Create+Instance">Create Instance</h3>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>chainpoint</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_c'>c</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Chainpoint.html" title="Chainpoint (class)">Chainpoint</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Chainpoint.html#initialize-instance_method" title="Chainpoint#initialize (method)">new</a></span></span>
+</code></pre>
+
+<h3 id="label-Submit+Hash">Submit Hash</h3>
+
+<pre class="code ruby"><code class="ruby"><span class='comment'># hash is SHA250
+</span><span class='comment'># hash = &#39;2fbe59be2be10a4fdeca9c6d3e9f56fc56fb3ee9a8ef2e9be37fced60c264681&#39;
+</span><span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_submit'>submit</span><span class='lparen'>(</span><span class='id identifier rubyid_hash'>hash</span><span class='rparen'>)</span>
+</code></pre>
+
+<h4 id="label-Response">Response</h4>
+
+<pre class="code ruby"><code class="ruby"><span class='lbrace'>{</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>meta</span><span class='tstring_end'>&quot;</span></span><span class='op'>=&gt;</span><span class='lbrace'>{</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>submitted_at</span><span class='tstring_end'>&quot;</span></span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2018-07-24T13:04:35Z</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>processing_hints</span><span class='tstring_end'>&quot;</span></span><span class='op'>=&gt;</span><span class='lbrace'>{</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cal</span><span class='tstring_end'>&quot;</span></span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2018-07-24T13:04:50Z</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>btc</span><span class='tstring_end'>&quot;</span></span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2018-07-24T14:05:35Z</span><span class='tstring_end'>&quot;</span></span>
+    <span class='rbrace'>}</span>
+  <span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hashes</span><span class='tstring_end'>&quot;</span></span><span class='op'>=&gt;</span><span class='lbracket'>[</span>
+    <span class='lbrace'>{</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hash_id_node</span><span class='tstring_end'>&quot;</span></span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1d1aa8a0-8f42-11e8-967f-01a68adfc010</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hash</span><span class='tstring_end'>&quot;</span></span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2fbe59be2be10a4fdeca9c6d3e9f56fc56fb3ee9a8ef2e9be37fced60c264681</span><span class='tstring_end'>&quot;</span></span>
+    <span class='rbrace'>}</span>
+  <span class='rbracket'>]</span>
+<span class='rbrace'>}</span>
+</code></pre>
+
+<p>Or, use <code>submit_data</code>:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_submit_data'>submit_data</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>text</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+</code></pre>
+
+<h3 id="label-Get+Proof">Get Proof</h3>
+
+<p>Pass hash_id_node value, which is shown after calling <code>submit</code>.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_get_proof'>get_proof</span><span class='lparen'>(</span><span class='id identifier rubyid_hash_id_node'>hash_id_node</span><span class='rparen'>)</span>
+</code></pre>
+
+<h4 id="label-Response">Response</h4>
+
+<pre class="code ruby"><code class="ruby"><span class='lbracket'>[</span>
+  <span class='lbrace'>{</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hash_id_node</span><span class='tstring_end'>&quot;</span></span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>a50eb4d0-8f20-11e8-8da8-0133565a0e60</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>proof</span><span class='tstring_end'>&quot;</span></span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>eJyNVMGOHDUQ5SP4BI7MTpXLLtt9Wolf4JTLyC6XmZaWmdF0JyHHhAtH9hMgizYgLkgoR/5jJD6G6tlN0O6ClEN3q22/V69cr+qHd5ey38363fzXdp4P07Bev6SxXeyP36xlW8bdYT/u5vULuplfHfS3rz4u3WzLtD1dul415KquKkLxvamULNxIcw/cxZ5Kqrkk7U7tIMUu2hjEseeEvy80m7Ftdvumpy9KAK2+wSp1BytETavUSloBEgUOBZTh/RkyPa/fjvOsd8hNmf90gHYwrpz/GvIAYQB49pFe9seFPoEXCg/oMxSjl9icBldLeEy/IP+bPjx7V49lJ1udrt/8clWqXv0h5WqzLO2Pm7u9t/vD9Pdnn7/+6er05Vnp2IZPyfL1z/vD7bQtKxf4DD7rWMCfkMNj8I+7cZoHDOS8I/AwtBijbx08Bo1aNUPKDTxV7uQoOQ6JtFLqQcEqlynVXtmD1wa5umhlpViJXER2JTTA0JisotC8OKeVMVgmkaVnAUQObCCreQJK9nos8NJ7xS4ZmIu65ok8lALdfNMFU0mYkodmvkKq3jF5VukSu0fhQFEeEh5Pl4196GjZmi89InaS1LnZr7rQagWDmRhkAo5UpMZumwAVs4+a6hPCnDGbex1LK8Bm94TYcs/dW7ZCuWVEqAGc3S9HbdW4oPvlE13P/ISwphyyL+yT3Wlk5hwqhhTsvq0zavApaFMO6HO09J1a7fpC3RGaRH1CyLFbGTwZh6+lcGzeBIWUk5fMORfruu5IQgZXoZnPzNN9KfkSMj5xTbYUncvxg3GsjAMOH8aEXPw7H5ZxMZj1h3vEWY5YEPOzqki3wKU5cz0hSEiNkwjXDsRm/CKliSegiFhRTf9isPJAzu1dU03X358H0VsL9ut9n43t9j7szfPjOF2fLv5P4tpQumvluL4HrJde/wcFK5lW</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>anchors_complete</span><span class='tstring_end'>&quot;</span></span><span class='op'>=&gt;</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cal</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+</code></pre>
+
+<h3 id="label-Verify">Verify</h3>
+
+<p>Pass proof value which is shown on calling <code>get_proof</code>.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_verify'>verify</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>eJyNVMGOHDUQ5SP4BI7MTpXLLtt9Wolf4JTLyC6XmZaWmdF0JyHHhAtH9hMgizYgLkgoR/5jJD6G6tlN0O6ClEN3q22/V69cr+qHd5ey38363fzXdp4P07Bev6SxXeyP36xlW8bdYT/u5vULuplfHfS3rz4u3WzLtD1dul415KquKkLxvamULNxIcw/cxZ5Kqrkk7U7tIMUu2hjEseeEvy80m7Ftdvumpy9KAK2+wSp1BytETavUSloBEgUOBZTh/RkyPa/fjvOsd8hNmf90gHYwrpz/GvIAYQB49pFe9seFPoEXCg/oMxSjl9icBldLeEy/IP+bPjx7V49lJ1udrt/8clWqXv0h5WqzLO2Pm7u9t/vD9Pdnn7/+6er05Vnp2IZPyfL1z/vD7bQtKxf4DD7rWMCfkMNj8I+7cZoHDOS8I/AwtBijbx08Bo1aNUPKDTxV7uQoOQ6JtFLqQcEqlynVXtmD1wa5umhlpViJXER2JTTA0JisotC8OKeVMVgmkaVnAUQObCCreQJK9nos8NJ7xS4ZmIu65ok8lALdfNMFU0mYkodmvkKq3jF5VukSu0fhQFEeEh5Pl4196GjZmi89InaS1LnZr7rQagWDmRhkAo5UpMZumwAVs4+a6hPCnDGbex1LK8Bm94TYcs/dW7ZCuWVEqAGc3S9HbdW4oPvlE13P/ISwphyyL+yT3Wlk5hwqhhTsvq0zavApaFMO6HO09J1a7fpC3RGaRH1CyLFbGTwZh6+lcGzeBIWUk5fMORfruu5IQgZXoZnPzNN9KfkSMj5xTbYUncvxg3GsjAMOH8aEXPw7H5ZxMZj1h3vEWY5YEPOzqki3wKU5cz0hSEiNkwjXDsRm/CKliSegiFhRTf9isPJAzu1dU03X358H0VsL9ut9n43t9j7szfPjOF2fLv5P4tpQumvluL4HrJde/wcFK5lW</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+</code></pre>
+
+<h4 id="label-Response">Response</h4>
+
+<pre class="code ruby"><code class="ruby"><span class='lbracket'>[</span>
+  <span class='lbrace'>{</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>proof_index</span><span class='tstring_end'>&quot;</span></span><span class='op'>=&gt;</span><span class='int'>0</span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hash</span><span class='tstring_end'>&quot;</span></span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2fbe59be2be10a4fdeca9c6d3e9f56fc56fb3ee9a8ef2e9be37fced60c264681</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hash_id_node</span><span class='tstring_end'>&quot;</span></span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>a50eb4d0-8f20-11e8-8da8-0133565a0e60</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hash_submitted_node_at</span><span class='tstring_end'>&quot;</span></span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2018-07-24T09:05:00Z</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hash_id_core</span><span class='tstring_end'>&quot;</span></span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>a804c350-8f20-11e8-890a-01c7d2e52ba5</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hash_submitted_core_at</span><span class='tstring_end'>&quot;</span></span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2018-07-24T09:05:05Z</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>anchors</span><span class='tstring_end'>&quot;</span></span><span class='op'>=&gt;</span><span class='lbracket'>[</span>
+      <span class='lbrace'>{</span>
+        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>branch</span><span class='tstring_end'>&quot;</span></span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cal_anchor_branch</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>type</span><span class='tstring_end'>&quot;</span></span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cal</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>valid</span><span class='tstring_end'>&quot;</span></span><span class='op'>=&gt;</span><span class='kw'>true</span>
+      <span class='rbrace'>}</span>
+    <span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>status</span><span class='tstring_end'>&quot;</span></span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>verified</span><span class='tstring_end'>&quot;</span></span>
+  <span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+</code></pre>
+
+<h2 id="label-Development">Development</h2>
+
+<p>After checking out the repo, run <code>bin/setup</code> to install
+dependencies. Then, run <code>rake spec</code> to run the tests. You can
+also run <code>bin/console</code> for an interactive prompt that will allow
+you to experiment.</p>
+
+<p>To install this gem onto your local machine, run <code>bundle exec rake
+install</code>. To release a new version, update the version number in
+<code>version.rb</code>, and then run <code>bundle exec rake
+release</code>, which will create a git tag for the version, push git
+commits and tags, and push the <code>.gem</code> file to <a
+href="https://rubygems.org">rubygems.org</a>.</p>
+
+<h2 id="label-Contributing">Contributing</h2>
+
+<p>Bug reports and pull requests are welcome on <a
+href="https://github.com/KenjiOhtsuka/chainpoint_gem">GitHub
+chainpoint</a>.</p>
+
+<h2 id="label-Other">Other</h2>
+<ul><li>
+<p>PHP <a
+href="https://packagist.org/packages/kenji-otsuka/chainpoint">Composer
+Package</a> and its <a
+href="https://github.com/KenjiOhtsuka/chainpoint_php">GitHub
+Repository</a>.</p>
+</li></ul>
+</div></div>
+
+      <div id="footer">
+  Generated on Wed Mar 13 20:01:04 2019 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.18 (ruby-2.5.1).
+</div>
+
+    </div>
+  </body>
+</html>

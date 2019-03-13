@@ -30,19 +30,32 @@ class Chainpoint
     @server_url = server_url
   end
 
+  # Submit data into the chainpoint server.
+  #
+  # @param data [Object] data which you want to submit into the chainpoint server.
   def self.submit_data(data)
     self.new().submit_data(data)
   end
 
+  # Submit data into the chainpoint server.
+  #
+  # @param data [Object] data which you want to submit into the chainpoint server.
   def submit_data(data)
     hash = Digest::SHA256.digest(data).unpack('H*')[0]
     return submit(hash)
   end
 
+  # Submit hash string into the chainpoint server.
+  #
+  # @param data [String] hash String which you want to submit into the chainpoint server.
   def self.submit(hash)
     self.new().submit(hash)
   end
 
+  # Submit hash string into the chainpoint server.
+  #
+  # @param data [String] hash String which you want to submit into the chainpoint server.
+  # @return [JSON]
   def submit(hash)
     uri = URI(@server_url + "/hashes")
     req = Net::HTTP::Post.new(uri, 'Content-Type' => 'application/json')
@@ -55,20 +68,33 @@ class Chainpoint
     return JSON.parse(res.body)
   end
 
+  # Get proof data from the chainpoint server.
+  #
+  # @param hash_id_node [String] hash id node of the proof
   def self.get_proof(hash_id_node)
     self.new().get_proof(hash_id_node)
   end
 
+  # Get proof data from the chainpoint server.
+  #
+  # @param hash_id_node [String] hash id node of the proof
+  # @return [JSON]
   def get_proof(hash_id_node)
     uri = URI(@server_url + '/proofs/' + hash_id_node)
     r = Net::HTTP.get(uri)
     return JSON.parse(r)
   end
 
+  # Verify the proof data.
+  #
+  # @param proof [String] proof string
   def self.verify(proof)
     self.new().verify(proof)
   end
 
+  # Verify the proof data.
+  #
+  # @param proof [String] proof string
   def verify(proof)
     uri = URI(@server_url + "/verify")
     req = Net::HTTP::Post.new(uri, 'Content-Type' => 'application/json')
@@ -82,6 +108,9 @@ class Chainpoint
   end
 
   private
+    # Choose one server from the server list.
+    #
+    # @return [String] server URL.
     def self.pickup_server()
       uri = URI(pickup_node_list_server)
       r = Net::HTTP.get(uri)
@@ -89,6 +118,9 @@ class Chainpoint
       return j[rand(j.length)]["public_uri"]
     end
 
+    # Get one node list server URL randomely.
+    #
+    # @return [String] server URL.
     def self.pickup_node_list_server
       endpoint_array = [
         'https://a.chainpoint.org/nodes/random',
