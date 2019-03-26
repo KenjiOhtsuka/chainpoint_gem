@@ -52,20 +52,20 @@ class Chainpoint
     self.new().submit(hash)
   end
 
-  # Submit hash string into the chainpoint server.
+  # Submit a hash to a chainpoint server
   #
   # @param data [String] hash String which you want to submit into the chainpoint server.
-  # @return [JSON]
+  # @return [Array] An array of hashes containing the keys `hash`, `hash_id_node` and `uri`
   def submit(hash)
-    uri = URI(@server_url + "/hashes")
-    req = Net::HTTP::Post.new(uri, 'Content-Type' => 'application/json')
-    req.body = {hashes: [hash]}.to_json
-    res = Net::HTTP.start(
-      uri.hostname, uri.port, use_ssl: uri.scheme == "https"
-    ) do |http|
-      http.request(req)
+    uri = URI(@server_url + '/hashes')
+    request = Net::HTTP::Post.new(uri, 'Content-Type' => 'application/json')
+    request.body = { hashes: [hash] }.to_json
+    response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == 'https') do |http|
+      http.request(request)
     end
-    return JSON.parse(res.body)
+
+    hashes = JSON.parse(response.body)['hashes']
+    hashes.map { |hash| hash.merge('uri' => @server_url) }
   end
 
   # Get proof data from the chainpoint server.
