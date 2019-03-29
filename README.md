@@ -37,6 +37,10 @@ chainpoint = Chainpoint.new
 
 ### Submit Hash
 
+Use this function to submit a hashes, and receive back the information needed to later retrieve a proof using `get_proof`
+
+By default hashes are submitted to three Nodes to help ensure a proof will become available at the appropriate time. Only one such proof need be permanently stored, the others provide redundancy.
+
 ```ruby
 # hash is SHA256
 # hash = '2fbe59be2be10a4fdeca9c6d3e9f56fc56fb3ee9a8ef2e9be37fced60c264681'

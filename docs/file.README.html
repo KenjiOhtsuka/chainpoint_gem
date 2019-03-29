@@ -97,6 +97,10 @@ chainpoint = Chainpoint.new
 
 <h3 id="submit-hash">Submit Hash</h3>
 
+<p>Use this function to submit a hashes, and receive back the information needed to later retrieve a proof using <code>get_proof</code></p>
+
+<p>By default hashes are submitted to three Nodes to help ensure a proof will become available at the appropriate time. Only one such proof need be permanently stored, the others provide redundancy.</p>
+
 <p><code>ruby
 # hash is SHA256
 # hash = '2fbe59be2be10a4fdeca9c6d3e9f56fc56fb3ee9a8ef2e9be37fced60c264681'
@@ -200,7 +204,7 @@ chainpoint.verify('eJyNVMGOHDUQ5SP4BI7MTpXLLtt9Wolf4JTLyC6XmZaWmdF0JyHHhAtH9hMgi
 </div></div>
 
       <div id="footer">
-  Generated on Thu Mar 28 22:38:19 2019 by
+  Generated on Thu Mar 28 22:49:21 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.18 (ruby-2.5.1).
 </div>
