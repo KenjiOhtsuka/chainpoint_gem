@@ -1,5 +1,7 @@
 # Chainpoint
 
+[![Build Status](https://travis-ci.org/KenjiOhtsuka/chainpoint_gem.svg?branch=master)](https://travis-ci.org/KenjiOhtsuka/chainpoint_gem)
+
 [![Gem Version](https://badge.fury.io/rb/chainpoint.svg)](https://badge.fury.io/rb/chainpoint)
 
 [Rubygem Page](https://rubygems.org/gems/chainpoint)
