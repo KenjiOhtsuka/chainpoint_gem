@@ -23,12 +23,14 @@ require 'digest'
 
 # Base class for interacting with a chainpoint node
 class Chainpoint
-  def initialize(server_url = nil)
-    if server_url.nil?
-      @server_url = self.class.pickup_server
-      return
-    end
-    @server_url = server_url
+  NODE_LIST_ENDPOINTS = ['https://a.chainpoint.org/nodes/random',
+                         'https://b.chainpoint.org/nodes/random',
+                         'https://c.chainpoint.org/nodes/random'].freeze
+
+  NUM_SERVERS = 3
+
+  def initialize(server_url = nil, num_servers: NUM_SERVERS)
+    @server_urls = [server_url] || pickup_servers(num_servers)
   end
 
   # Submit data into the chainpoint server.
@@ -56,82 +58,69 @@ class Chainpoint
   # Submit a hash to a chainpoint server
   #
   # @param data [String] hash String which you want to submit into the chainpoint server.
-  # @return [Array] An array of hashes containing the keys `hash`, `hash_id_node` and `uri`
+  # @return [Array] An array of Chainpoint::Hash objects
   def submit(hash)
-    uri = URI(@server_url + '/hashes')
-    request = Net::HTTP::Post.new(uri, 'Content-Type' => 'application/json')
-    request.body = { hashes: [hash] }.to_json
-    response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == 'https') do |http|
-      http.request(request)
-    end
-
-    hashes = JSON.parse(response.body)['hashes']
-    hashes.map { |h| h.merge('uri' => @server_url) }
+    @server_urls.map do |url|
+      response = post_hash(url, hash)
+      JSON.parse(response.body)['hashes'].map { |h| h.merge('uri' => url) }
+    end.flatten
   end
 
   # Get proof data from the chainpoint server.
   #
-  # @param hash_id_node [String] hash id node of the proof
-  def self.get_proof(hash_id_node)
-    new.get_proof(hash_id_node)
+  # @param URI [String] hash id node of the proof
+  # @param node_hash_id [String] hash id node of the proof
+  # @return [JSON]
+  def self.get_proof(uri, node_hash_id)
+    new(uri).get_proof(node_hash_id)
   end
 
   # Get proof data from the chainpoint server.
   #
   # @param hash_id_node [String] hash id node of the proof
   # @return [JSON]
-  def get_proof(hash_id_node)
-    uri = URI(@server_url + '/proofs/' + hash_id_node)
-    r = Net::HTTP.get(uri)
-    JSON.parse(r)
+  def get_proof(node_hash_id)
+    uri = URI(@server_urls.first + '/proofs/' + node_hash_id)
+    JSON.parse(Net::HTTP.get(uri))
   end
 
   # Verify the proof data.
   #
   # @param proof [String] proof string
   def self.verify(proof)
-    new.verify(proof)
+    new(num_servers: 1).verify(proof)
   end
 
   # Verify the proof data.
   #
   # @param proof [String] proof string
   def verify(proof)
-    uri = URI(@server_url + '/verify')
-    req = Net::HTTP::Post.new(uri, 'Content-Type' => 'application/json')
-    req.body = { proofs: [proof] }.to_json
-    res = Net::HTTP.start(
-      uri.hostname, uri.port, use_ssl: uri.scheme == 'https'
-    ) do |http|
-      http.request(req)
+    uri = URI(@server_urls.first + '/verify')
+    request = Net::HTTP::Post.new(uri, 'Content-Type' => 'application/json')
+    request.body = { proofs: [proof] }.to_json
+
+    response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == 'https') do |http|
+      http.request(request)
     end
-    JSON.parse(res.body)
+
+    JSON.parse(response.body)
   end
 
-  class << self
-    private
+  private
 
-    # Choose one server from the server list.
-    #
-    # @return [String] server URL.
-    def pickup_server
-      uri = URI(pickup_node_list_server)
-      r = Net::HTTP.get(uri)
-      j = JSON.parse(r)
-      j[rand(j.length)]['public_uri']
-    end
+  def pickup_servers(num_servers)
+    node_list_uri = URI(NODE_LIST_ENDPOINTS.sample)
+    servers = JSON.parse(Net::HTTP.get(node_list_uri)).sample(num_servers)
+    servers.map { |server| server['public_uri'] }
+  end
 
-    # Get one node list server URL randomely.
-    #
-    # @return [String] server URL.
-    def pickup_node_list_server
-      endpoint_array = [
-        'https://a.chainpoint.org/nodes/random',
-        'https://b.chainpoint.org/nodes/random',
-        'https://c.chainpoint.org/nodes/random'
-      ]
+  def post_hash(url, hash)
+    uri = URI(url + '/hashes')
+    request = Net::HTTP::Post.new(uri, 'Content-Type' => 'application/json')
+    request.body = { hashes: [hash] }.to_json
 
-      endpoint_array[rand(endpoint_array.length)]
+    Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == 'https') do |http|
+      http.request(request)
     end
   end
 end
