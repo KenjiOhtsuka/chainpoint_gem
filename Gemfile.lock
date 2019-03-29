@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    chainpoint (0.0.3)
+    chainpoint (0.0.4)
       json
 
 GEM

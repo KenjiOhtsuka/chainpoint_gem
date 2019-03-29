@@ -32,49 +32,44 @@ Or install it yourself as:
 
 ```ruby
 require 'chainpoint'
-c = Chainpoint.new
+chainpoint = Chainpoint.new
 ```
 
 ### Submit Hash
 
 ```ruby
-# hash is SHA250
+# hash is SHA256
 # hash = '2fbe59be2be10a4fdeca9c6d3e9f56fc56fb3ee9a8ef2e9be37fced60c264681'
-c.submit(hash)
+chainpoint.submit(hash)
 ```
 
 #### Response
 
 ```ruby
-{
-  "meta"=>{
-    "submitted_at"=>"2018-07-24T13:04:35Z",
-    "processing_hints"=>{
-      "cal"=>"2018-07-24T13:04:50Z",
-      "btc"=>"2018-07-24T14:05:35Z"
-    }
-  },
-  "hashes"=>[
-    {
-      "hash_id_node"=>"1d1aa8a0-8f42-11e8-967f-01a68adfc010",
-      "hash"=>"2fbe59be2be10a4fdeca9c6d3e9f56fc56fb3ee9a8ef2e9be37fced60c264681"
-    }
-  ]
-}
+[
+  {
+    "hash_id_node" => "1d1aa8a0-8f42-11e8-967f-01a68adfc010",
+    "hash" => "2fbe59be2be10a4fdeca9c6d3e9f56fc56fb3ee9a8ef2e9be37fced60c264681"
+    "uri" => "http://45.77.197.76"
+  }
+]
+
 ```
 
 Or, use `submit_data`:
 
 ```ruby
-c.submit_data("text")
+chainpoint.submit_data("text")
 ```
 
 ### Get Proof
 
-Pass hash_id_node value, which is shown after calling `submit`.
+Only the node that a hash was submitted to can retrieve the proof, so initialize the client with
+the uri from the submit response and pass the hash_id_node from the same response:
 
 ```ruby
-c.get_proof(hash_id_node)
+chainpoint = Chainpoint.new('http://45.77.197.76')
+chainpoint.get_proof(hash_id_node)
 ```
 
 #### Response
