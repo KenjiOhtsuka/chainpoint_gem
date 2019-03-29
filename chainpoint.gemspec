@@ -16,6 +16,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/KenjiOhtsuka/chainpoint_gem'
 
   spec.add_runtime_dependency 'json'
+  spec.add_runtime_dependency 'msgpack'
   spec.required_ruby_version = '>= 2.5.0'
 
   spec.license = 'GPL-3.0'

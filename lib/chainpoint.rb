@@ -20,6 +20,9 @@ require 'chainpoint/version'
 require 'net/https'
 require 'json'
 require 'digest'
+require 'base64'
+require 'msgpack'
+require 'zlib'
 
 # Base class for interacting with a chainpoint node
 class Chainpoint
@@ -84,6 +87,14 @@ class Chainpoint
     uri = URI(@server_url + '/proofs/' + hash_id_node)
     r = Net::HTTP.get(uri)
     JSON.parse(r)
+  end
+
+  def decode_proof(proof)
+    MessagePack.unpack(
+      Zlib::Inflate.inflate(
+        Base64.decode64(proof)
+      )
+    )
   end
 
   # Verify the proof data.
