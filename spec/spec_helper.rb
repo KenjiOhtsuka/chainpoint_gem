@@ -17,6 +17,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 require 'bundler/setup'
+require 'byebug'
+require 'simplecov'
+require 'vcr'
+
+SimpleCov.start
+
 require 'chainpoint'
 
 RSpec.configure do |config|
@@ -26,7 +32,16 @@ RSpec.configure do |config|
   # Disable RSpec exposing methods globally on `Module` and `main`
   config.disable_monkey_patching!
 
+  config.filter_run :focus
+  config.run_all_when_everything_filtered = true
+
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+end
+
+VCR.configure do |c|
+  c.configure_rspec_metadata!
+  c.cassette_library_dir = 'spec/vcr/cassettes'
+  c.hook_into :webmock
 end

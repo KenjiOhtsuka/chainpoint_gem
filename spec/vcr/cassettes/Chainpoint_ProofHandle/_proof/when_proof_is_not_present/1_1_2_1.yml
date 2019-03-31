@@ -1,0 +1,38 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://80.211.58.129/proofs/fa07e250-535f-11e9-833f-01d2112f8dc2
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - 80.211.58.129
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - chainpoint-node
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 31 Mar 2019 03:11:37 GMT
+      Connection:
+      - keep-alive
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"hash_id_node":"fa07e250-535f-11e9-833f-01d2112f8dc2","proof":null,"anchors_complete":[]}]'
+    http_version: 
+  recorded_at: Sun, 31 Mar 2019 03:11:38 GMT
+recorded_with: VCR 4.0.0

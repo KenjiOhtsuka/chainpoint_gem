@@ -1,0 +1,40 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://212.237.35.202/verify
+    body:
+      encoding: UTF-8
+      string: '{"proofs":["eJyNk79uFDEQxl+Gkst5bI//bBWJV6BKcxrP2NxKx+7pdhOgDDS0KWiRIEEJiAYJUfIe9zZ4746gBJDSuBjr+803o2/e3hxz34355fhzOY7roZnPX5hWjvrNszkvqe3WfduN8zNzNb5a5y9PbktXSxqW22NlnEdiNKVEFkCDzOylsBTSbDEwagjGQ7EQhMG4ogUiMZSUA+HXCbNoZdH1krePSkw626BmFVRmADnOkmSeKbAUPKhQ5T92kuE0PW/HMe+VCxq/awVxpszMwFOlG9SNCie3eO43E54oY7qDDxF1xadazxQtxfv4SflPPKiTm7Shjpd5uHj9aUUpr74xrRZTqd8s9n+X/Xp4f/5htX2889lK85AZzz/26+thSTONbifeuZjED5jgvvhd1w7jWTWMaJVSztVHNVyMaMrGi81KS+KE5BQjJKZQRGNMPoAFCVzdlaRLIo+lUAJjuISMxTo2bHUU9gEJFeUgpkBkp4UpeQtRvBVx2qpSqVjDEDnqaUp71+VmexxQJ1FWi7Y1PC6pJOTBobI+m1x9FLZJZa9dyVAnSFFlZBunqJWaw7+AHiNFR8ob7bRPJXir6/JdBQemQgAaUIDA1pRiEqg9qQiJQSqAcH+PUUfnwd4u0lvVQPP7bPjoz71M59PUKDQHxc5OdGBscK5iUg1/sdoBQN2oTcnXUYzTICYYkxglJ0yk6+Y8aGUVE5k7dq73IRsu3uwO87I2+3zIXSvXh7ZXp5t2uNge/c/ivKpyJ7SZHwTzKfu/AOXNVwQ="]}'
+    headers:
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - 212.237.35.202
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - chainpoint-node
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 31 Mar 2019 03:51:43 GMT
+      Connection:
+      - keep-alive
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"proof_index":0,"hash":"03675ac53ff9cd1535ccc7dfcdfa2c458c5218371f418dc136f2d19ac1fbe8a5","hash_id_node":"f9b2e480-535f-11e9-bdec-014a871086f2","hash_submitted_node_at":"2019-03-31T02:52:08Z","hash_id_core":"faae5b80-535f-11e9-8952-01be5bea94a9","hash_submitted_core_at":"2019-03-31T02:52:10Z","anchors":[{"branch":"cal_anchor_branch","type":"cal","valid":true,"block_id":"2967142","block_value":"a13fee6595f729ce2c05f07ab4de15ee98e617f5cb88c79691d4cff598bce267"}],"status":"verified"}]'
+    http_version: 
+  recorded_at: Sun, 31 Mar 2019 03:51:43 GMT
+recorded_with: VCR 4.0.0
