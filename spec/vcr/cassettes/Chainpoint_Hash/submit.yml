@@ -1,0 +1,114 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://138.68.111.47/hashes
+    body:
+      encoding: UTF-8
+      string: '{"hashes":["03675ac53ff9cd1535ccc7dfcdfa2c458c5218371f418dc136f2d19ac1fbe8a5"]}'
+    headers:
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - 138.68.111.47
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - chainpoint-node
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 31 Mar 2019 00:28:00 GMT
+      Connection:
+      - keep-alive
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"meta":{"submitted_at":"2019-03-31T00:28:00Z","processing_hints":{"cal":"2019-03-31T00:28:15Z","btc":"2019-03-31T02:00:00Z"}},"hashes":[{"hash_id_node":"d6ef7260-534b-11e9-970c-01217f1ababe","hash":"03675ac53ff9cd1535ccc7dfcdfa2c458c5218371f418dc136f2d19ac1fbe8a5"}]}'
+    http_version: 
+  recorded_at: Sun, 31 Mar 2019 00:28:00 GMT
+- request:
+    method: post
+    uri: http://80.211.33.253/hashes
+    body:
+      encoding: UTF-8
+      string: '{"hashes":["03675ac53ff9cd1535ccc7dfcdfa2c458c5218371f418dc136f2d19ac1fbe8a5"]}'
+    headers:
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - 80.211.33.253
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - chainpoint-node
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 31 Mar 2019 00:28:02 GMT
+      Connection:
+      - keep-alive
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"meta":{"submitted_at":"2019-03-31T00:28:02Z","processing_hints":{"cal":"2019-03-31T00:28:17Z","btc":"2019-03-31T02:00:00Z"}},"hashes":[{"hash_id_node":"d7d9ab50-534b-11e9-93ce-01cfa3ad8146","hash":"03675ac53ff9cd1535ccc7dfcdfa2c458c5218371f418dc136f2d19ac1fbe8a5"}]}'
+    http_version: 
+  recorded_at: Sun, 31 Mar 2019 00:28:02 GMT
+- request:
+    method: post
+    uri: http://206.189.74.81/hashes
+    body:
+      encoding: UTF-8
+      string: '{"hashes":["03675ac53ff9cd1535ccc7dfcdfa2c458c5218371f418dc136f2d19ac1fbe8a5"]}'
+    headers:
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - 206.189.74.81
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - chainpoint-node
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 31 Mar 2019 00:28:02 GMT
+      Connection:
+      - keep-alive
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"meta":{"submitted_at":"2019-03-31T00:28:02Z","processing_hints":{"cal":"2019-03-31T00:28:17Z","btc":"2019-03-31T02:00:00Z"}},"hashes":[{"hash_id_node":"d8157bd0-534b-11e9-8c58-01474df3c5ee","hash":"03675ac53ff9cd1535ccc7dfcdfa2c458c5218371f418dc136f2d19ac1fbe8a5"}]}'
+    http_version: 
+  recorded_at: Sun, 31 Mar 2019 00:28:02 GMT
+recorded_with: VCR 4.0.0

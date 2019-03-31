@@ -1,0 +1,94 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://c.chainpoint.org/nodes/random
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - c.chainpoint.org
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 30 Mar 2019 22:32:00 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=d5ee01227f233d84db0a49994c461628a1553985120; expires=Sun, 29-Mar-20
+        22:32:00 GMT; path=/; domain=.chainpoint.org; HttpOnly; Secure
+      Cf-Cache-Status:
+      - EXPIRED
+      Cache-Control:
+      - public, max-age=60
+      Cf-Ray:
+      - 4bfd89791e2e8ce7-PDX
+      Access-Control-Allow-Origin:
+      - "*"
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"public_uri":"http://80.211.33.253"},{"public_uri":"http://206.189.74.81"},{"public_uri":"http://188.213.161.106"},{"public_uri":"http://159.65.75.7"},{"public_uri":"http://167.99.165.58"},{"public_uri":"http://212.237.35.202"},{"public_uri":"http://45.32.195.241"},{"public_uri":"http://80.211.161.91"},{"public_uri":"http://212.237.15.16"},{"public_uri":"http://195.201.144.62"},{"public_uri":"http://149.28.204.132"},{"public_uri":"http://45.32.207.68"},{"public_uri":"http://159.65.72.32"},{"public_uri":"http://165.227.71.180"},{"public_uri":"http://194.182.76.33"},{"public_uri":"http://209.250.250.173"},{"public_uri":"http://159.65.67.57"},{"public_uri":"http://89.36.222.149"},{"public_uri":"http://206.189.221.236"},{"public_uri":"http://149.28.250.195"},{"public_uri":"http://165.227.67.137"},{"public_uri":"http://89.46.67.185"},{"public_uri":"http://159.65.67.73"},{"public_uri":"http://188.213.166.43"},{"public_uri":"http://8.9.8.169"}]'
+    http_version: 
+  recorded_at: Sat, 30 Mar 2019 22:32:00 GMT
+- request:
+    method: post
+    uri: http://212.237.35.202/verify
+    body:
+      encoding: UTF-8
+      string: '{"proofs":["123"]}'
+    headers:
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - 212.237.35.202
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - chainpoint-node
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 30 Mar 2019 22:32:00 GMT
+      Connection:
+      - keep-alive
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: "[]"
+    http_version: 
+  recorded_at: Sat, 30 Mar 2019 22:32:01 GMT
+recorded_with: VCR 4.0.0

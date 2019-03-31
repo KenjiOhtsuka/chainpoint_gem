@@ -1,0 +1,38 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://80.211.58.129/proofs/f9b2e480-535f-11e9-bdec-014a871086f2
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - 80.211.58.129
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - chainpoint-node
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 31 Mar 2019 03:12:32 GMT
+      Connection:
+      - keep-alive
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"hash_id_node":"f9b2e480-535f-11e9-bdec-014a871086f2","proof":"eJyNk79uFDEQxl+Gkst5bI//bBWJV6BKcxrP2NxKx+7pdhOgDDS0KWiRIEEJiAYJUfIe9zZ4746gBJDSuBjr+803o2/e3hxz34355fhzOY7roZnPX5hWjvrNszkvqe3WfduN8zNzNb5a5y9PbktXSxqW22NlnEdiNKVEFkCDzOylsBTSbDEwagjGQ7EQhMG4ogUiMZSUA+HXCbNoZdH1krePSkw626BmFVRmADnOkmSeKbAUPKhQ5T92kuE0PW/HMe+VCxq/awVxpszMwFOlG9SNCie3eO43E54oY7qDDxF1xadazxQtxfv4SflPPKiTm7Shjpd5uHj9aUUpr74xrRZTqd8s9n+X/Xp4f/5htX2889lK85AZzz/26+thSTONbifeuZjED5jgvvhd1w7jWTWMaJVSztVHNVyMaMrGi81KS+KE5BQjJKZQRGNMPoAFCVzdlaRLIo+lUAJjuISMxTo2bHUU9gEJFeUgpkBkp4UpeQtRvBVx2qpSqVjDEDnqaUp71+VmexxQJ1FWi7Y1PC6pJOTBobI+m1x9FLZJZa9dyVAnSFFlZBunqJWaw7+AHiNFR8ob7bRPJXir6/JdBQemQgAaUIDA1pRiEqg9qQiJQSqAcH+PUUfnwd4u0lvVQPP7bPjoz71M59PUKDQHxc5OdGBscK5iUg1/sdoBQN2oTcnXUYzTICYYkxglJ0yk6+Y8aGUVE5k7dq73IRsu3uwO87I2+3zIXSvXh7ZXp5t2uNge/c/ivKpyJ7SZHwTzKfu/AOXNVwQ=","anchors_complete":["cal"]}]'
+    http_version: 
+  recorded_at: Sun, 31 Mar 2019 03:12:32 GMT
+recorded_with: VCR 4.0.0

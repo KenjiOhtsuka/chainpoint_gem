@@ -1,13 +1,14 @@
 # Chainpoint
 
+[![Build Status](https://travis-ci.org/KenjiOhtsuka/chainpoint_gem.svg?branch=master)](https://travis-ci.org/KenjiOhtsuka/chainpoint_gem)
+
 [![Gem Version](https://badge.fury.io/rb/chainpoint.svg)](https://badge.fury.io/rb/chainpoint)
 
 [Rubygem Page](https://rubygems.org/gems/chainpoint)
 
-[API Document](https://kenjiohtsuka.github.io/chainpoint_gem/)
+[API Documentation](https://kenjiohtsuka.github.io/chainpoint_gem/)
 
-This is gem for request to Tierion Chainpoint.
-For Chainpoint, look at [Chainpoint Node HTTP API](https://github.com/chainpoint/chainpoint-node/wiki/Node-HTTP-API).
+A client for creating and verifying [Chainpoint](https://chainpoint.org/) proofs.
 
 ## Installation
 
@@ -21,98 +22,109 @@ And then execute:
 
     $ bundle
 
-
 Or install it yourself as:
 
     $ gem install chainpoint
 
 ## Usage
 
-### Create Instance
+### Initialize new hash object
 
 ```ruby
-require 'chainpoint'
-chainpoint = Chainpoint.new
+sha256 = '09ca7e4eaa6e8ae9c7d261167129184883644d07dfba7cbfbc4c8a2e08360d5b'
+chainpoint_hash = ChainPoint::Hash.new(sha256)
+```
+
+`Chainpoint::Hash.from_data` is a convenience method to create a new `Chainpoint::Hash` from raw
+data:
+
+```ruby
+chainpoint_hash = Chainpoint::Hash.from_data('hello, world')
+# => #<Chainpoint::Hash @hash="09ca7e4eaa6e8ae9c7d26116712918...>
 ```
 
 ### Submit Hash
 
-```ruby
-# hash is SHA256
-# hash = '2fbe59be2be10a4fdeca9c6d3e9f56fc56fb3ee9a8ef2e9be37fced60c264681'
-chainpoint.submit(hash)
-```
+Use this function to submit a hash, and receive back the proof handles needed to later retrieve a
+proof.
 
-#### Response
+By default hashes are submitted to three Nodes to help ensure a proof will become available at the appropriate time. Only one such proof need be permanently stored, the others provide redundancy.
 
 ```ruby
+chainpoint_hash = Chainpoint::Hash.from_data('hello, world')
+proof_handles = chainpoint_hash.submit
+# =>
 [
   {
-    "hash_id_node" => "1d1aa8a0-8f42-11e8-967f-01a68adfc010",
-    "hash" => "2fbe59be2be10a4fdeca9c6d3e9f56fc56fb3ee9a8ef2e9be37fced60c264681"
-    "uri" => "http://45.77.197.76"
+    'hash_id_node' => '1d1aa8a0-8f42-11e8-967f-01a68adfc010',
+    'uri' => 'http://45.77.197.76'
   }
+  ...
 ]
 
-```
-
-Or, use `submit_data`:
-
-```ruby
-chainpoint.submit_data("text")
 ```
 
 ### Get Proof
 
-Only the node that a hash was submitted to can retrieve the proof, so initialize the client with
-the uri from the submit response and pass the hash_id_node from the same response:
+Once a hash has been submitted, it contains proof handles that can be used to retrieve the proof.
+It's likely that you will be retrieving proofs at a later time, so it is possible to initialize
+a `Chainpoint::Hash` object with proof handle data returned from a previous submit.
+
+A `Chainpoint::Proof` representing the first valid proof will be returned, or `nil` if there is no valid proof.
 
 ```ruby
-chainpoint = Chainpoint.new('http://45.77.197.76')
-chainpoint.get_proof(hash_id_node)
+chainpoint_hash = Chainpoint::Hash.new(sha256, proof_handles: proof_handles)
+chainpoint_hash.proof
+
+#=> #<Chainpoint::Proof @proof="eJyNk71uFDEx0=...", @hash_id_node="1672f730-...1", @anchors_complete=["cal"]>
+```
+
+You may also pass an anchor type to return only proofs matching that type. By default chainpoint
+anchors to a Calendar blockchain (`cal`) which usually completes in about 10s and to the Bitcoin blockchain `btc` which usually completes in about 2h.
+
+```ruby
+proof = Chainpoint::Hash.new(sha256, proof_handles: proof_handles).proof('btc')
+#=> #<Chainpoint::Proof @proof="eJyNk71uFDEx0=...", @hash_id_node="1672f730-...1", @anchors_complete=["cal", "btc"]>
+```
+
+### Decode a Proof
+
+A `Chainpoint::Proof` object contains a binary representation of the proof can be converted to JSON to view the Chainpoint JSON Schema:
+
+```ruby
+proof.decode
+# =>
+```
+
+### Verify a Proof
+
+You can verify a proof against each of the blockchains the proof has been anchored to:
+
+```ruby
+proof.verify
 ```
 
 #### Response
 
-```
-[
-  {
-    "hash_id_node"=>"a50eb4d0-8f20-11e8-8da8-0133565a0e60",
-    "proof"=>"eJyNVMGOHDUQ5SP4BI7MTpXLLtt9Wolf4JTLyC6XmZaWmdF0JyHHhAtH9hMgizYgLkgoR/5jJD6G6tlN0O6ClEN3q22/V69cr+qHd5ey38363fzXdp4P07Bev6SxXeyP36xlW8bdYT/u5vULuplfHfS3rz4u3WzLtD1dul415KquKkLxvamULNxIcw/cxZ5Kqrkk7U7tIMUu2hjEseeEvy80m7Ftdvumpy9KAK2+wSp1BytETavUSloBEgUOBZTh/RkyPa/fjvOsd8hNmf90gHYwrpz/GvIAYQB49pFe9seFPoEXCg/oMxSjl9icBldLeEy/IP+bPjx7V49lJ1udrt/8clWqXv0h5WqzLO2Pm7u9t/vD9Pdnn7/+6er05Vnp2IZPyfL1z/vD7bQtKxf4DD7rWMCfkMNj8I+7cZoHDOS8I/AwtBijbx08Bo1aNUPKDTxV7uQoOQ6JtFLqQcEqlynVXtmD1wa5umhlpViJXER2JTTA0JisotC8OKeVMVgmkaVnAUQObCCreQJK9nos8NJ7xS4ZmIu65ok8lALdfNMFU0mYkodmvkKq3jF5VukSu0fhQFEeEh5Pl4196GjZmi89InaS1LnZr7rQagWDmRhkAo5UpMZumwAVs4+a6hPCnDGbex1LK8Bm94TYcs/dW7ZCuWVEqAGc3S9HbdW4oPvlE13P/ISwphyyL+yT3Wlk5hwqhhTsvq0zavApaFMO6HO09J1a7fpC3RGaRH1CyLFbGTwZh6+lcGzeBIWUk5fMORfruu5IQgZXoZnPzNN9KfkSMj5xTbYUncvxg3GsjAMOH8aEXPw7H5ZxMZj1h3vEWY5YEPOzqki3wKU5cz0hSEiNkwjXDsRm/CKliSegiFhRTf9isPJAzu1dU03X358H0VsL9ut9n43t9j7szfPjOF2fLv5P4tpQumvluL4HrJde/wcFK5lW",
-    "anchors_complete"=>["cal"]
-  }
-]
-```
-
-### Verify
-
-Pass proof value which is shown on calling `get_proof`.
-
 ```ruby
-c.verify('eJyNVMGOHDUQ5SP4BI7MTpXLLtt9Wolf4JTLyC6XmZaWmdF0JyHHhAtH9hMgizYgLkgoR/5jJD6G6tlN0O6ClEN3q22/V69cr+qHd5ey38363fzXdp4P07Bev6SxXeyP36xlW8bdYT/u5vULuplfHfS3rz4u3WzLtD1dul415KquKkLxvamULNxIcw/cxZ5Kqrkk7U7tIMUu2hjEseeEvy80m7Ftdvumpy9KAK2+wSp1BytETavUSloBEgUOBZTh/RkyPa/fjvOsd8hNmf90gHYwrpz/GvIAYQB49pFe9seFPoEXCg/oMxSjl9icBldLeEy/IP+bPjx7V49lJ1udrt/8clWqXv0h5WqzLO2Pm7u9t/vD9Pdnn7/+6er05Vnp2IZPyfL1z/vD7bQtKxf4DD7rWMCfkMNj8I+7cZoHDOS8I/AwtBijbx08Bo1aNUPKDTxV7uQoOQ6JtFLqQcEqlynVXtmD1wa5umhlpViJXER2JTTA0JisotC8OKeVMVgmkaVnAUQObCCreQJK9nos8NJ7xS4ZmIu65ok8lALdfNMFU0mYkodmvkKq3jF5VukSu0fhQFEeEh5Pl4196GjZmi89InaS1LnZr7rQagWDmRhkAo5UpMZumwAVs4+a6hPCnDGbex1LK8Bm94TYcs/dW7ZCuWVEqAGc3S9HbdW4oPvlE13P/ISwphyyL+yT3Wlk5hwqhhTsvq0zavApaFMO6HO09J1a7fpC3RGaRH1CyLFbGTwZh6+lcGzeBIWUk5fMORfruu5IQgZXoZnPzNN9KfkSMj5xTbYUncvxg3GsjAMOH8aEXPw7H5ZxMZj1h3vEWY5YEPOzqki3wKU5cz0hSEiNkwjXDsRm/CKliSegiFhRTf9isPJAzu1dU03X358H0VsL9ut9n43t9j7szfPjOF2fLv5P4tpQumvluL4HrJde/wcFK5lW')
-```
+{
+  "proof_index" => 0,
+  "hash" => "09ca7e4eaa6e8ae9c7d261167129184883644d07dfba7cbfbc4c8a2e08360d5b",
+  "hash_id_node" => "1672f730-536b-11e9-9241-015d8fee1e71",
+  "hash_submitted_node_at" => "2019-03-31T04:11:41Z",
+  "hash_id_core" => "18456d40-536b-11e9-8c0f-016fe824db22",
+  "hash_submitted_core_at" => "2019-03-31T04:11:44Z",
+  "anchors" => [
+    {
+      "branch" => "cal_anchor_branch",
+      "type" => "cal",
+      "valid" => true,
+      "block_id" => "2967333", "block_value" => "74e2b62f68463f53105b65d57c729e5488b7833d6ebb259561b84e43d826c7ea"
+    }
+  ],
+  "status"=>"verified"
+}
 
-#### Response
-
-```ruby
-[
-  {
-    "proof_index"=>0,
-    "hash"=>"2fbe59be2be10a4fdeca9c6d3e9f56fc56fb3ee9a8ef2e9be37fced60c264681",
-    "hash_id_node"=>"a50eb4d0-8f20-11e8-8da8-0133565a0e60",
-    "hash_submitted_node_at"=>"2018-07-24T09:05:00Z",
-    "hash_id_core"=>"a804c350-8f20-11e8-890a-01c7d2e52ba5",
-    "hash_submitted_core_at"=>"2018-07-24T09:05:05Z",
-    "anchors"=>[
-      {
-        "branch"=>"cal_anchor_branch",
-        "type"=>"cal",
-        "valid"=>true
-      }
-    ],
-    "status"=>"verified"
-  }
-]
 ```
 
 ## Development

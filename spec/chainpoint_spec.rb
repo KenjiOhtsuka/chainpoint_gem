@@ -1,27 +1,38 @@
-=begin
-    chainpoint_gem
-    Copyright (C) 2019 Kenji Otsuka
+# frozen_string_literal: true
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-=end
+# chainpoint_gem
+# Copyright (C) 2019 Kenji Otsuka
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 RSpec.describe Chainpoint do
-  it "has a version number" do
+  it 'has a version number' do
     expect(Chainpoint::VERSION).not_to be nil
   end
 
-  it "does something useful" do
-    expect(false).to eq(true)
+  describe '.select_nodes', :vcr do
+    subject(:nodes) { Chainpoint.select_nodes(number) }
+
+    before do
+      Chainpoint::NODE_LIST_ENDPOINTS = ['https://a.chainpoint.org/nodes/random'].freeze
+    end
+
+    let(:number) { 1 }
+
+    it 'returns a randomly selected public uri' do
+      expect(nodes.length).to be(number)
+      expect(URI(nodes.first).scheme).to eq('http')
+    end
   end
 end
