@@ -59,14 +59,15 @@
 
       <div id="content"><div id='filecontents'><h1 id="chainpoint">Chainpoint</h1>
 
+<p><a href="https://travis-ci.org/KenjiOhtsuka/chainpoint_gem"><img src="https://travis-ci.org/KenjiOhtsuka/chainpoint_gem.svg?branch=master" alt="Build Status" /></a></p>
+
 <p><a href="https://badge.fury.io/rb/chainpoint"><img src="https://badge.fury.io/rb/chainpoint.svg" alt="Gem Version" /></a></p>
 
 <p><a href="https://rubygems.org/gems/chainpoint">Rubygem Page</a></p>
 
-<p><a href="https://kenjiohtsuka.github.io/chainpoint_gem/">API Document</a></p>
+<p><a href="https://kenjiohtsuka.github.io/chainpoint_gem/">API Documentation</a></p>
 
-<p>This is gem for request to Tierion Chainpoint.
-For Chainpoint, look at <a href="https://github.com/chainpoint/chainpoint-node/wiki/Node-HTTP-API">Chainpoint Node HTTP API</a>.</p>
+<p>A client for creating and verifying <a href="https://chainpoint.org/">Chainpoint</a> proofs.</p>
 
 <h2 id="installation">Installation</h2>
 
@@ -88,103 +89,104 @@ gem 'chainpoint'
 
 <h2 id="usage">Usage</h2>
 
-<h3 id="create-instance">Create Instance</h3>
+<h3 id="initialize-new-hash-object">Initialize new hash object</h3>
 
 <p><code>ruby
-require 'chainpoint'
-chainpoint = Chainpoint.new
+sha256 = '09ca7e4eaa6e8ae9c7d261167129184883644d07dfba7cbfbc4c8a2e08360d5b'
+chainpoint_hash = ChainPoint::Hash.new(sha256)
+</code></p>
+
+<p><code>Chainpoint::Hash.from_data</code> is a convenience method to create a new <code>Chainpoint::Hash</code> from raw
+data:</p>
+
+<p><code>ruby
+chainpoint_hash = Chainpoint::Hash.from_data('hello, world')
+# =&gt; #&lt;Chainpoint::Hash @hash="09ca7e4eaa6e8ae9c7d26116712918...&gt;
 </code></p>
 
 <h3 id="submit-hash">Submit Hash</h3>
 
-<p>Use this function to submit a hashes, and receive back the information needed to later retrieve a proof using <code>get_proof</code></p>
+<p>Use this function to submit a hash, and receive back the proof handles needed to later retrieve a
+proof.</p>
 
 <p>By default hashes are submitted to three Nodes to help ensure a proof will become available at the appropriate time. Only one such proof need be permanently stored, the others provide redundancy.</p>
 
+<p>```ruby
+chainpoint_hash = Chainpoint::Hash.from_data(‘hello, world’)
+proof_handles = chainpoint_hash.submit
+# =&gt;
+[
+  {
+    ‘hash_id_node’ =&gt; ‘1d1aa8a0-8f42-11e8-967f-01a68adfc010’,
+    ‘uri’ =&gt; ‘http://45.77.197.76’
+  }
+  …
+]</p>
+
+<p>```</p>
+
+<h3 id="get-proof">Get Proof</h3>
+
+<p>Once a hash has been submitted, it contains proof handles that can be used to retrieve the proof.
+It’s likely that you will be retrieving proofs at a later time, so it is possible to initialize
+a <code>Chainpoint::Hash</code> object with proof handle data returned from a previous submit.</p>
+
+<p>A <code>Chainpoint::Proof</code> representing the first valid proof will be returned, or <code>nil</code> if there is no valid proof.</p>
+
+<p>```ruby
+chainpoint_hash = Chainpoint::Hash.new(sha256, proof_handles: proof_handles)
+chainpoint_hash.proof</p>
+
+<h1 id="chainpointproof-proofejynk71ufdex0-hashidnode1672f730-1-anchorscompletecal">=&gt; #&lt;Chainpoint::Proof @proof=”eJyNk71uFDEx0=…”, @hash_id_node=”1672f730-…1”, @anchors_complete=[“cal”]&gt;</h1>
+<p>```</p>
+
+<p>You may also pass an anchor type to return only proofs matching that type. By default chainpoint
+anchors to a Calendar blockchain (<code>cal</code>) which usually completes in about 10s and to the Bitcoin blockchain <code>btc</code> which usually completes in about 2h.</p>
+
 <p><code>ruby
-# hash is SHA256
-# hash = '2fbe59be2be10a4fdeca9c6d3e9f56fc56fb3ee9a8ef2e9be37fced60c264681'
-chainpoint.submit(hash)
+proof = Chainpoint::Hash.new(sha256, proof_handles: proof_handles).proof('btc')
+#=&gt; #&lt;Chainpoint::Proof @proof="eJyNk71uFDEx0=...", @hash_id_node="1672f730-...1", @anchors_complete=["cal", "btc"]&gt;
+</code></p>
+
+<h3 id="decode-a-proof">Decode a Proof</h3>
+
+<p>A <code>Chainpoint::Proof</code> object contains a binary representation of the proof can be converted to JSON to view the Chainpoint JSON Schema:</p>
+
+<p><code>ruby
+proof.decode
+# =&gt;
+</code></p>
+
+<h3 id="verify-a-proof">Verify a Proof</h3>
+
+<p>You can verify a proof against each of the blockchains the proof has been anchored to:</p>
+
+<p><code>ruby
+proof.verify
 </code></p>
 
 <h4 id="response">Response</h4>
 
 <p>```ruby
-[
-  {
-    “hash_id_node” =&gt; “1d1aa8a0-8f42-11e8-967f-01a68adfc010”,
-    “hash” =&gt; “2fbe59be2be10a4fdeca9c6d3e9f56fc56fb3ee9a8ef2e9be37fced60c264681”
-    “uri” =&gt; “http://45.77.197.76”
-  }
-]</p>
+{
+  “proof_index” =&gt; 0,
+  “hash” =&gt; “09ca7e4eaa6e8ae9c7d261167129184883644d07dfba7cbfbc4c8a2e08360d5b”,
+  “hash_id_node” =&gt; “1672f730-536b-11e9-9241-015d8fee1e71”,
+  “hash_submitted_node_at” =&gt; “2019-03-31T04:11:41Z”,
+  “hash_id_core” =&gt; “18456d40-536b-11e9-8c0f-016fe824db22”,
+  “hash_submitted_core_at” =&gt; “2019-03-31T04:11:44Z”,
+  “anchors” =&gt; [
+    {
+      “branch” =&gt; “cal_anchor_branch”,
+      “type” =&gt; “cal”,
+      “valid” =&gt; true,
+      “block_id” =&gt; “2967333”, “block_value” =&gt; “74e2b62f68463f53105b65d57c729e5488b7833d6ebb259561b84e43d826c7ea”
+    }
+  ],
+  “status”=&gt;”verified”
+}</p>
 
 <p>```</p>
-
-<p>Or, use <code>submit_data</code>:</p>
-
-<p><code>ruby
-chainpoint.submit_data("text")
-</code></p>
-
-<h3 id="get-proof">Get Proof</h3>
-
-<p>Only the node that a hash was submitted to can retrieve the proof, so initialize the client with
-the uri from the submit response and pass the hash_id_node from the same response:</p>
-
-<p><code>ruby
-chainpoint = Chainpoint.new('http://45.77.197.76')
-chainpoint.get_proof(hash_id_node)
-</code></p>
-
-<h4 id="response-1">Response</h4>
-
-<p><code>
-[
-  {
-    "hash_id_node"=&gt;"a50eb4d0-8f20-11e8-8da8-0133565a0e60",
-    "proof"=&gt;"eJyNVMGOHDUQ5SP4BI7MTpXLLtt9Wolf4JTLyC6XmZaWmdF0JyHHhAtH9hMgizYgLkgoR/5jJD6G6tlN0O6ClEN3q22/V69cr+qHd5ey38363fzXdp4P07Bev6SxXeyP36xlW8bdYT/u5vULuplfHfS3rz4u3WzLtD1dul415KquKkLxvamULNxIcw/cxZ5Kqrkk7U7tIMUu2hjEseeEvy80m7Ftdvumpy9KAK2+wSp1BytETavUSloBEgUOBZTh/RkyPa/fjvOsd8hNmf90gHYwrpz/GvIAYQB49pFe9seFPoEXCg/oMxSjl9icBldLeEy/IP+bPjx7V49lJ1udrt/8clWqXv0h5WqzLO2Pm7u9t/vD9Pdnn7/+6er05Vnp2IZPyfL1z/vD7bQtKxf4DD7rWMCfkMNj8I+7cZoHDOS8I/AwtBijbx08Bo1aNUPKDTxV7uQoOQ6JtFLqQcEqlynVXtmD1wa5umhlpViJXER2JTTA0JisotC8OKeVMVgmkaVnAUQObCCreQJK9nos8NJ7xS4ZmIu65ok8lALdfNMFU0mYkodmvkKq3jF5VukSu0fhQFEeEh5Pl4196GjZmi89InaS1LnZr7rQagWDmRhkAo5UpMZumwAVs4+a6hPCnDGbex1LK8Bm94TYcs/dW7ZCuWVEqAGc3S9HbdW4oPvlE13P/ISwphyyL+yT3Wlk5hwqhhTsvq0zavApaFMO6HO09J1a7fpC3RGaRH1CyLFbGTwZh6+lcGzeBIWUk5fMORfruu5IQgZXoZnPzNN9KfkSMj5xTbYUncvxg3GsjAMOH8aEXPw7H5ZxMZj1h3vEWY5YEPOzqki3wKU5cz0hSEiNkwjXDsRm/CKliSegiFhRTf9isPJAzu1dU03X358H0VsL9ut9n43t9j7szfPjOF2fLv5P4tpQumvluL4HrJde/wcFK5lW",
-    "anchors_complete"=&gt;["cal"]
-  }
-]
-</code></p>
-
-<h3 id="decode-proof">Decode Proof</h3>
-
-<p>A proof string can be converted to JSON to view the Chainpoint JSON Schema
-<code>ruby
-chainpoint.decode_proof(proof)
-</code></p>
-
-<h3 id="verify">Verify</h3>
-
-<p>Pass proof value which is shown on calling <code>get_proof</code>.</p>
-
-<p><code>ruby
-chainpoint.verify('eJyNVMGOHDUQ5SP4BI7MTpXLLtt9Wolf4JTLyC6XmZaWmdF0JyHHhAtH9hMgizYgLkgoR/5jJD6G6tlN0O6ClEN3q22/V69cr+qHd5ey38363fzXdp4P07Bev6SxXeyP36xlW8bdYT/u5vULuplfHfS3rz4u3WzLtD1dul415KquKkLxvamULNxIcw/cxZ5Kqrkk7U7tIMUu2hjEseeEvy80m7Ftdvumpy9KAK2+wSp1BytETavUSloBEgUOBZTh/RkyPa/fjvOsd8hNmf90gHYwrpz/GvIAYQB49pFe9seFPoEXCg/oMxSjl9icBldLeEy/IP+bPjx7V49lJ1udrt/8clWqXv0h5WqzLO2Pm7u9t/vD9Pdnn7/+6er05Vnp2IZPyfL1z/vD7bQtKxf4DD7rWMCfkMNj8I+7cZoHDOS8I/AwtBijbx08Bo1aNUPKDTxV7uQoOQ6JtFLqQcEqlynVXtmD1wa5umhlpViJXER2JTTA0JisotC8OKeVMVgmkaVnAUQObCCreQJK9nos8NJ7xS4ZmIu65ok8lALdfNMFU0mYkodmvkKq3jF5VukSu0fhQFEeEh5Pl4196GjZmi89InaS1LnZr7rQagWDmRhkAo5UpMZumwAVs4+a6hPCnDGbex1LK8Bm94TYcs/dW7ZCuWVEqAGc3S9HbdW4oPvlE13P/ISwphyyL+yT3Wlk5hwqhhTsvq0zavApaFMO6HO09J1a7fpC3RGaRH1CyLFbGTwZh6+lcGzeBIWUk5fMORfruu5IQgZXoZnPzNN9KfkSMj5xTbYUncvxg3GsjAMOH8aEXPw7H5ZxMZj1h3vEWY5YEPOzqki3wKU5cz0hSEiNkwjXDsRm/CKliSegiFhRTf9isPJAzu1dU03X358H0VsL9ut9n43t9j7szfPjOF2fLv5P4tpQumvluL4HrJde/wcFK5lW')
-</code></p>
-
-<h4 id="response-2">Response</h4>
-
-<p><code>ruby
-[
-  {
-    "proof_index"=&gt;0,
-    "hash"=&gt;"2fbe59be2be10a4fdeca9c6d3e9f56fc56fb3ee9a8ef2e9be37fced60c264681",
-    "hash_id_node"=&gt;"a50eb4d0-8f20-11e8-8da8-0133565a0e60",
-    "hash_submitted_node_at"=&gt;"2018-07-24T09:05:00Z",
-    "hash_id_core"=&gt;"a804c350-8f20-11e8-890a-01c7d2e52ba5",
-    "hash_submitted_core_at"=&gt;"2018-07-24T09:05:05Z",
-    "anchors"=&gt;[
-      {
-        "branch"=&gt;"cal_anchor_branch",
-        "type"=&gt;"cal",
-        "valid"=&gt;true
-      }
-    ],
-    "status"=&gt;"verified"
-  }
-]
-</code></p>
 
 <h2 id="development">Development</h2>
 
@@ -204,7 +206,7 @@ chainpoint.verify('eJyNVMGOHDUQ5SP4BI7MTpXLLtt9Wolf4JTLyC6XmZaWmdF0JyHHhAtH9hMgi
 </div></div>
 
       <div id="footer">
-  Generated on Thu Mar 28 22:49:21 2019 by
+  Generated on Sun Mar 31 14:17:09 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.18 (ruby-2.5.1).
 </div>
