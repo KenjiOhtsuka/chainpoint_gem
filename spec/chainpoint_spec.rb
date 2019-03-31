@@ -20,4 +20,19 @@ RSpec.describe Chainpoint do
   it 'has a version number' do
     expect(Chainpoint::VERSION).not_to be nil
   end
+
+  describe '.select_nodes', :vcr do
+    subject(:nodes) { Chainpoint.select_nodes(number) }
+
+    before do
+      Chainpoint::NODE_LIST_ENDPOINTS = ['https://a.chainpoint.org/nodes/random'].freeze
+    end
+
+    let(:number) { 1 }
+
+    it 'returns a randomly selected public uri' do
+      expect(nodes.length).to be(number)
+      expect(URI(nodes.first).scheme).to eq('http')
+    end
+  end
 end
