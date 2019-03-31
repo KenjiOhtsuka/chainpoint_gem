@@ -2,7 +2,7 @@ sudo: false
 language: ruby
 rvm:
   - 2.5.0
-before_install: gem install bundler -v 1.16.1
+before_install: gem install bundler -v 1.16.6
 script:
   - bundle exec rspec -f p
   - bundle exec rubocop
