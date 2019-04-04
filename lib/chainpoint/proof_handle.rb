@@ -5,6 +5,9 @@ module Chainpoint
     attr_reader :uri, :node_hash_id
 
     def initialize(uri, node_hash_id)
+      raise ArgumentError, 'Proof Handle uri not specified' unless uri
+      raise ArgumentError, 'Proof Handle node_hash_id not specified' unless node_hash_id
+
       @uri = uri
       @node_hash_id = node_hash_id
     end
