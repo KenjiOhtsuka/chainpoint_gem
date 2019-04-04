@@ -9,7 +9,7 @@ RSpec.describe Chainpoint::ProofHandle do
   let(:node_hash_id) { 'fa07e250-535f-11e9-833f-01d2112f8dc2' }
 
   describe '#initialize' do
-    subject(:initialize!) { Chainpoint::ProofHandle.new(uri, node_hash_id) }
+    subject(:initialize!) { proof_handle }
 
     context 'with nil uri' do
       let(:uri) { nil }
