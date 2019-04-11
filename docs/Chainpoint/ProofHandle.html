@@ -272,6 +272,19 @@
 </div>
 <div class="tags">
   
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -282,12 +295,18 @@
 7
 8
 9
-10</pre>
+10
+11
+12
+13</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/chainpoint/proof_handle.rb', line 7</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_node_hash_id'>node_hash_id</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Proof Handle uri not specified</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_uri'>uri</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Proof Handle node_hash_id not specified</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_node_hash_id'>node_hash_id</span>
+
   <span class='ivar'>@uri</span> <span class='op'>=</span> <span class='id identifier rubyid_uri'>uri</span>
   <span class='ivar'>@node_hash_id</span> <span class='op'>=</span> <span class='id identifier rubyid_node_hash_id'>node_hash_id</span>
 <span class='kw'>end</span></pre>
@@ -409,15 +428,15 @@
       <pre class="lines">
 
 
-12
-13
-14
 15
 16
-17</pre>
+17
+18
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/chainpoint/proof_handle.rb', line 12</span>
+      <pre class="code"><span class="info file"># File 'lib/chainpoint/proof_handle.rb', line 15</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_proof'>proof</span>
   <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='id identifier rubyid_request_proof'>request_proof</span>
@@ -445,12 +464,12 @@
       <pre class="lines">
 
 
-19
-20
-21</pre>
+22
+23
+24</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/chainpoint/proof_handle.rb', line 19</span>
+      <pre class="code"><span class="info file"># File 'lib/chainpoint/proof_handle.rb', line 22</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_h'>to_h</span>
   <span class='lbrace'>{</span> <span class='label'>uri:</span> <span class='ivar'>@uri</span><span class='comma'>,</span> <span class='label'>node_hash_id:</span> <span class='ivar'>@node_hash_id</span> <span class='rbrace'>}</span>
@@ -465,7 +484,7 @@
 </div>
 
       <div id="footer">
-  Generated on Sun Mar 31 14:30:37 2019 by
+  Generated on Thu Apr 11 16:23:25 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.18 (ruby-2.5.1).
 </div>

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    chainpoint (0.0.4)
+    chainpoint (1.0.1)
       json
       msgpack
 

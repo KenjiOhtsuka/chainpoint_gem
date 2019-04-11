@@ -57,25 +57,29 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><div id='filecontents'><h1 id="chainpoint">Chainpoint</h1>
+      <div id="content"><div id='filecontents'>
+<h1 id="label-Chainpoint">Chainpoint</h1>
 
-<p><a href="https://travis-ci.org/KenjiOhtsuka/chainpoint_gem"><img src="https://travis-ci.org/KenjiOhtsuka/chainpoint_gem.svg?branch=master" alt="Build Status" /></a></p>
+<p><a href="https://travis-ci.org/KenjiOhtsuka/chainpoint_gem"><img
+src="https://travis-ci.org/KenjiOhtsuka/chainpoint_gem.svg?branch=master"></a></p>
 
-<p><a href="https://badge.fury.io/rb/chainpoint"><img src="https://badge.fury.io/rb/chainpoint.svg" alt="Gem Version" /></a></p>
+<p><a href="https://badge.fury.io/rb/chainpoint"><img
+src="https://badge.fury.io/rb/chainpoint.svg"></a></p>
 
 <p><a href="https://rubygems.org/gems/chainpoint">Rubygem Page</a></p>
 
-<p><a href="https://kenjiohtsuka.github.io/chainpoint_gem/">API Documentation</a></p>
+<p><a href="https://kenjiohtsuka.github.io/chainpoint_gem/">API
+Documentation</a></p>
 
-<p>A client for creating and verifying <a href="https://chainpoint.org/">Chainpoint</a> proofs.</p>
+<p>A client for creating and verifying <a
+href="https://chainpoint.org/">Chainpoint</a> proofs.</p>
 
-<h2 id="installation">Installation</h2>
+<h2 id="label-Installation">Installation</h2>
 
-<p>Add this line to your application’s Gemfile:</p>
+<p>Add this line to your application&#39;s Gemfile:</p>
 
-<p><code>ruby
-gem 'chainpoint'
-</code></p>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_gem'>gem</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>chainpoint</span><span class='tstring_end'>&#39;</span></span>
+</code></pre>
 
 <p>And then execute:</p>
 
@@ -87,126 +91,138 @@ gem 'chainpoint'
 <pre class="code ruby"><code class="ruby">$ gem install chainpoint
 </code></pre>
 
-<h2 id="usage">Usage</h2>
+<h2 id="label-Usage">Usage</h2>
 
-<h3 id="initialize-new-hash-object">Initialize new hash object</h3>
+<h3 id="label-Initialize+new+hash+object">Initialize new hash object</h3>
 
-<p><code>ruby
-sha256 = '09ca7e4eaa6e8ae9c7d261167129184883644d07dfba7cbfbc4c8a2e08360d5b'
-chainpoint_hash = ChainPoint::Hash.new(sha256)
-</code></p>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_sha256'>sha256</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>09ca7e4eaa6e8ae9c7d261167129184883644d07dfba7cbfbc4c8a2e08360d5b</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_chainpoint_hash'>chainpoint_hash</span> <span class='op'>=</span> <span class='const'>ChainPoint</span><span class='op'>::</span><span class='const'>Hash</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_sha256'>sha256</span><span class='rparen'>)</span>
+</code></pre>
 
-<p><code>Chainpoint::Hash.from_data</code> is a convenience method to create a new <code>Chainpoint::Hash</code> from raw
-data:</p>
+<p><code>Chainpoint::Hash.from_data</code> is a convenience method to create a
+new <code>Chainpoint::Hash</code> from raw data:</p>
 
-<p><code>ruby
-chainpoint_hash = Chainpoint::Hash.from_data('hello, world')
-# =&gt; #&lt;Chainpoint::Hash @hash="09ca7e4eaa6e8ae9c7d26116712918...&gt;
-</code></p>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_chainpoint_hash'>chainpoint_hash</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Chainpoint.html" title="Chainpoint (module)">Chainpoint</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Chainpoint/Hash.html" title="Chainpoint::Hash (class)">Hash</a></span></span><span class='period'>.</span><span class='id identifier rubyid_from_data'><span class='object_link'><a href="Chainpoint/Hash.html#from_data-class_method" title="Chainpoint::Hash.from_data (method)">from_data</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>hello, world</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+<span class='comment'># =&gt; #&lt;Chainpoint::Hash @hash=&quot;09ca7e4eaa6e8ae9c7d26116712918...&gt;
+</span></code></pre>
 
-<h3 id="submit-hash">Submit Hash</h3>
+<h3 id="label-Submit+Hash">Submit Hash</h3>
 
-<p>Use this function to submit a hash, and receive back the proof handles needed to later retrieve a
-proof.</p>
+<p>Use this function to submit a hash, and receive back the proof handles
+needed to later retrieve a proof.</p>
 
-<p>By default hashes are submitted to three Nodes to help ensure a proof will become available at the appropriate time. Only one such proof need be permanently stored, the others provide redundancy.</p>
+<p>By default hashes are submitted to three Nodes to help ensure a proof will
+become available at the appropriate time. Only one such proof need be
+permanently stored, the others provide redundancy.</p>
 
-<p>```ruby
-chainpoint_hash = Chainpoint::Hash.from_data(‘hello, world’)
+<pre class="code ruby"><code class="ruby">chainpoint_hash = Chainpoint::Hash.from_data(&#39;hello, world&#39;)
 proof_handles = chainpoint_hash.submit
 # =&gt;
 [
   {
-    ‘hash_id_node’ =&gt; ‘1d1aa8a0-8f42-11e8-967f-01a68adfc010’,
-    ‘uri’ =&gt; ‘http://45.77.197.76’
+    &#39;hash_id_node&#39; =&gt; &#39;1d1aa8a0-8f42-11e8-967f-01a68adfc010&#39;,
+    &#39;uri&#39; =&gt; &#39;http://45.77.197.76&#39;
   }
-  …
-]</p>
+  ...
+]
+</code></pre>
 
-<p>```</p>
+<h3 id="label-Get+Proof">Get Proof</h3>
 
-<h3 id="get-proof">Get Proof</h3>
+<p>Once a hash has been submitted, it contains proof handles that can be used
+to retrieve the proof. It&#39;s likely that you will be retrieving proofs
+at a later time, so it is possible to initialize a
+<code>Chainpoint::Hash</code> object with proof handle data returned from a
+previous submit.</p>
 
-<p>Once a hash has been submitted, it contains proof handles that can be used to retrieve the proof.
-It’s likely that you will be retrieving proofs at a later time, so it is possible to initialize
-a <code>Chainpoint::Hash</code> object with proof handle data returned from a previous submit.</p>
+<p>A <code>Chainpoint::Proof</code> representing the first valid proof will be
+returned, or <code>nil</code> if there is no valid proof.</p>
 
-<p>A <code>Chainpoint::Proof</code> representing the first valid proof will be returned, or <code>nil</code> if there is no valid proof.</p>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_chainpoint_hash'>chainpoint_hash</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Chainpoint.html" title="Chainpoint (module)">Chainpoint</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Chainpoint/Hash.html" title="Chainpoint::Hash (class)">Hash</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Chainpoint/Hash.html#initialize-instance_method" title="Chainpoint::Hash#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_sha256'>sha256</span><span class='comma'>,</span> <span class='label'>proof_handles:</span> <span class='id identifier rubyid_proof_handles'>proof_handles</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_chainpoint_hash'>chainpoint_hash</span><span class='period'>.</span><span class='id identifier rubyid_proof'>proof</span>
 
-<p>```ruby
-chainpoint_hash = Chainpoint::Hash.new(sha256, proof_handles: proof_handles)
-chainpoint_hash.proof</p>
+<span class='comment'>#=&gt; #&lt;Chainpoint::Proof @proof=&quot;eJyNk71uFDEx0=...&quot;, @hash_id_node=&quot;1672f730-...1&quot;, @anchors_complete=[&quot;cal&quot;]&gt;
+</span></code></pre>
 
-<h1 id="chainpointproof-proofejynk71ufdex0-hashidnode1672f730-1-anchorscompletecal">=&gt; #&lt;Chainpoint::Proof @proof=”eJyNk71uFDEx0=…”, @hash_id_node=”1672f730-…1”, @anchors_complete=[“cal”]&gt;</h1>
-<p>```</p>
+<p>You may also pass an anchor type to return only proofs matching that type.
+By default chainpoint anchors to a Calendar blockchain (<code>cal</code>)
+which usually completes in about 10s and to the Bitcoin blockchain
+<code>btc</code> which usually completes in about 2h.</p>
 
-<p>You may also pass an anchor type to return only proofs matching that type. By default chainpoint
-anchors to a Calendar blockchain (<code>cal</code>) which usually completes in about 10s and to the Bitcoin blockchain <code>btc</code> which usually completes in about 2h.</p>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_proof'>proof</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Chainpoint.html" title="Chainpoint (module)">Chainpoint</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Chainpoint/Hash.html" title="Chainpoint::Hash (class)">Hash</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Chainpoint/Hash.html#initialize-instance_method" title="Chainpoint::Hash#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_sha256'>sha256</span><span class='comma'>,</span> <span class='label'>proof_handles:</span> <span class='id identifier rubyid_proof_handles'>proof_handles</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_proof'><span class='object_link'><a href="Chainpoint/Hash.html#proof-instance_method" title="Chainpoint::Hash#proof (method)">proof</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>btc</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+<span class='comment'>#=&gt; #&lt;Chainpoint::Proof @proof=&quot;eJyNk71uFDEx0=...&quot;, @hash_id_node=&quot;1672f730-...1&quot;, @anchors_complete=[&quot;cal&quot;, &quot;btc&quot;]&gt;
+</span></code></pre>
 
-<p><code>ruby
-proof = Chainpoint::Hash.new(sha256, proof_handles: proof_handles).proof('btc')
-#=&gt; #&lt;Chainpoint::Proof @proof="eJyNk71uFDEx0=...", @hash_id_node="1672f730-...1", @anchors_complete=["cal", "btc"]&gt;
-</code></p>
+<h3 id="label-Decode+a+Proof">Decode a Proof</h3>
 
-<h3 id="decode-a-proof">Decode a Proof</h3>
+<p>A <code>Chainpoint::Proof</code> object contains a binary representation of
+the proof can be converted to JSON to view the Chainpoint JSON Schema:</p>
 
-<p>A <code>Chainpoint::Proof</code> object contains a binary representation of the proof can be converted to JSON to view the Chainpoint JSON Schema:</p>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_proof'>proof</span><span class='period'>.</span><span class='id identifier rubyid_decode'>decode</span>
+<span class='comment'># =&gt;
+</span></code></pre>
 
-<p><code>ruby
-proof.decode
-# =&gt;
-</code></p>
+<h3 id="label-Verify+a+Proof">Verify a Proof</h3>
 
-<h3 id="verify-a-proof">Verify a Proof</h3>
+<p>You can verify a proof against each of the blockchains the proof has been
+anchored to:</p>
 
-<p>You can verify a proof against each of the blockchains the proof has been anchored to:</p>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_proof'>proof</span><span class='period'>.</span><span class='id identifier rubyid_verify'>verify</span>
+</code></pre>
 
-<p><code>ruby
-proof.verify
-</code></p>
+<h4 id="label-Response">Response</h4>
 
-<h4 id="response">Response</h4>
+<pre class="code ruby"><code class="ruby"><span class='lbrace'>{</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>proof_index</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='int'>0</span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hash</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>09ca7e4eaa6e8ae9c7d261167129184883644d07dfba7cbfbc4c8a2e08360d5b</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hash_id_node</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1672f730-536b-11e9-9241-015d8fee1e71</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hash_submitted_node_at</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2019-03-31T04:11:41Z</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hash_id_core</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>18456d40-536b-11e9-8c0f-016fe824db22</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hash_submitted_core_at</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2019-03-31T04:11:44Z</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>anchors</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span>
+    <span class='lbrace'>{</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>branch</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cal_anchor_branch</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>type</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cal</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>valid</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>block_id</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2967333</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>block_value</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>74e2b62f68463f53105b65d57c729e5488b7833d6ebb259561b84e43d826c7ea</span><span class='tstring_end'>&quot;</span></span>
+    <span class='rbrace'>}</span>
+  <span class='rbracket'>]</span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>status</span><span class='tstring_end'>&quot;</span></span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>verified</span><span class='tstring_end'>&quot;</span></span>
+<span class='rbrace'>}</span>
+</code></pre>
 
-<p>```ruby
-{
-  “proof_index” =&gt; 0,
-  “hash” =&gt; “09ca7e4eaa6e8ae9c7d261167129184883644d07dfba7cbfbc4c8a2e08360d5b”,
-  “hash_id_node” =&gt; “1672f730-536b-11e9-9241-015d8fee1e71”,
-  “hash_submitted_node_at” =&gt; “2019-03-31T04:11:41Z”,
-  “hash_id_core” =&gt; “18456d40-536b-11e9-8c0f-016fe824db22”,
-  “hash_submitted_core_at” =&gt; “2019-03-31T04:11:44Z”,
-  “anchors” =&gt; [
-    {
-      “branch” =&gt; “cal_anchor_branch”,
-      “type” =&gt; “cal”,
-      “valid” =&gt; true,
-      “block_id” =&gt; “2967333”, “block_value” =&gt; “74e2b62f68463f53105b65d57c729e5488b7833d6ebb259561b84e43d826c7ea”
-    }
-  ],
-  “status”=&gt;”verified”
-}</p>
+<h2 id="label-Development">Development</h2>
 
-<p>```</p>
+<p>After checking out the repo, run <code>bin/setup</code> to install
+dependencies. Then, run <code>rake spec</code> to run the tests. You can
+also run <code>bin/console</code> for an interactive prompt that will allow
+you to experiment.</p>
 
-<h2 id="development">Development</h2>
+<p>To install this gem onto your local machine, run <code>bundle exec rake
+install</code>. To release a new version, update the version number in
+<code>version.rb</code>, and then run <code>bundle exec rake
+release</code>, which will create a git tag for the version, push git
+commits and tags, and push the <code>.gem</code> file to <a
+href="https://rubygems.org">rubygems.org</a>.</p>
 
-<p>After checking out the repo, run <code>bin/setup</code> to install dependencies. Then, run <code>rake spec</code> to run the tests. You can also run <code>bin/console</code> for an interactive prompt that will allow you to experiment.</p>
+<h2 id="label-Contributing">Contributing</h2>
 
-<p>To install this gem onto your local machine, run <code>bundle exec rake install</code>. To release a new version, update the version number in <code>version.rb</code>, and then run <code>bundle exec rake release</code>, which will create a git tag for the version, push git commits and tags, and push the <code>.gem</code> file to <a href="https://rubygems.org">rubygems.org</a>.</p>
+<p>Bug reports and pull requests are welcome on <a
+href="https://github.com/KenjiOhtsuka/chainpoint_gem">GitHub
+chainpoint</a>.</p>
 
-<h2 id="contributing">Contributing</h2>
-
-<p>Bug reports and pull requests are welcome on <a href="https://github.com/KenjiOhtsuka/chainpoint_gem">GitHub chainpoint</a>.</p>
-
-<h2 id="other">Other</h2>
-
-<ul>
-  <li>PHP <a href="https://packagist.org/packages/kenji-otsuka/chainpoint">Composer Package</a> and its <a href="https://github.com/KenjiOhtsuka/chainpoint_php">GitHub Repository</a>.</li>
-</ul>
+<h2 id="label-Other">Other</h2>
+<ul><li>
+<p>PHP <a
+href="https://packagist.org/packages/kenji-otsuka/chainpoint">Composer
+Package</a> and its <a
+href="https://github.com/KenjiOhtsuka/chainpoint_php">GitHub
+Repository</a>.</p>
+</li></ul>
 </div></div>
 
       <div id="footer">
-  Generated on Sun Mar 31 14:30:37 2019 by
+  Generated on Thu Apr 11 16:23:25 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.18 (ruby-2.5.1).
 </div>
