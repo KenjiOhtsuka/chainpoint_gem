@@ -14,10 +14,7 @@ module Chainpoint
 
     def initialize(hash, proof_handles: [])
       @hash = hash
-      @proof_handles =
-        proof_handles.map do |data|
-          ProofHandle.new(data[:uri], data[:node_hash_id])
-        end
+      self.proof_handles = proof_handles
     end
 
     def submit
@@ -36,6 +33,13 @@ module Chainpoint
       proofs = @proof_handles.map(&:proof).compact
 
       anchor_type ? proofs.find { |p| p.anchors_complete.include?(anchor_type) } : proofs.first
+    end
+
+    def proof_handles=(handles)
+      @proof_handles = handles.map do |data|
+        data.transform_keys!(&:to_sym)
+        ProofHandle.new(data[:uri], data[:node_hash_id])
+      end
     end
 
     def to_h

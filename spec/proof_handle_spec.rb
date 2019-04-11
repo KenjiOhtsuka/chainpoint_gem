@@ -3,7 +3,30 @@
 require 'spec_helper'
 
 RSpec.describe Chainpoint::ProofHandle do
-  let(:proof_handle) { described_class.new('http://80.211.58.129', node_hash_id) }
+  let(:proof_handle) { described_class.new(uri, node_hash_id) }
+
+  let(:uri)          { 'http://80.211.58.129' }
+  let(:node_hash_id) { 'fa07e250-535f-11e9-833f-01d2112f8dc2' }
+
+  describe '#initialize' do
+    subject(:initialize!) { proof_handle }
+
+    context 'with nil uri' do
+      let(:uri) { nil }
+
+      it 'raises an ArgumentError' do
+        expect { initialize! }.to raise_error(ArgumentError)
+      end
+    end
+
+    context 'with nil node_hash_id' do
+      let(:node_hash_id) { nil }
+
+      it 'raises an ArgumentError' do
+        expect { initialize! }.to raise_error(ArgumentError)
+      end
+    end
+  end
 
   describe '#proof', :vcr do
     subject(:proof) { proof_handle.proof }

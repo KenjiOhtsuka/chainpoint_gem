@@ -3,12 +3,27 @@
 require 'spec_helper'
 
 RSpec.describe Chainpoint::Hash do
-  let(:chainpoint_hash) { Chainpoint::Hash.from_data(data) }
+  let(:chainpoint_hash) { described_class.from_data(data) }
   let(:data) { 'Hello, World' }
 
   describe '.from_data' do
     it 'creates a new hash with a sha256 hash of the data' do
       expect(chainpoint_hash.hash).to eq(Digest::SHA256.hexdigest(data))
+    end
+  end
+
+  describe '#proof_handles=' do
+    let(:hash) { described_class.new('abcdefg') }
+
+    it 'allows passing proof handles with string keys' do
+      hash.proof_handles = [{ 'uri': 'http://1.2.3.4', 'node_hash_id': '123' }]
+
+      expect(hash.proof_handles.size).to be(1)
+    end
+
+    it 'allows passing proof handles with symbol keys' do
+      hash.proof_handles = [{ uri: 'http://1.2.3.4', node_hash_id: '123' }]
+      expect(hash.proof_handles.size).to be(1)
     end
   end
 
