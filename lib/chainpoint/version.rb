@@ -17,5 +17,5 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 module Chainpoint
-  VERSION = '1.0.1'
+  VERSION = '1.1.0'
 end
